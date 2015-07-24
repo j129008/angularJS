@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <style>
+    table, th , td  {
+      border: 1px solid grey;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table tr:nth-child(odd) {
+      background-color: #f1f1f1;
+    }
+    table tr:nth-child(even) {
+      background-color: #ffffff;
+    }
+    </style>
+
+    <body>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+        <div ng-app="hep" ng-init="judge=[
+        {name:'熊貓', school:'建中', hate:'', rank:3},
+        {name:'猩猩', school:'建中', hate:'', rank:2},
+        {name:'企鵝', school:'景美', hate:'', rank:1},
+        {name:'獅子', school:'', hate:'老虎', rank:4},
+        {name:'老虎', school:'',hate:'獅子', rank:5},
+        {name:'水瀨', school:'',hate:'', rank:6}];
+        user={school:'建中'}
+        ">
+            <h1>我的學校:</h1>
+            <input type="text" ng-model="user.school"></input>
+            <br>
+            <br>
+            <h1>裁判人選:</h1>
+            <p ng-repeat="x in judge">裁判: <input type="text" ng-model="x.name"></input> 畢業於: <input type="text" ng-model="x.school"></input> 黑特裁判:<input type="text" ng-model="x.hate"></input></p>
+            <br>
+            <h1>裁判黑特排名:</h1>
+            <p ng-repeat="x in judge">裁判:{{ x.name }} 被{{user.school}}黑特的排名: <input type="number" ng-model="x.rank"></input></p>
+            <br>
+            <br>
+
+            <h2>適合{{user.school}}的志願順序:</h2>
+
+            <table>
+                <tr ng-repeat="x in judge | orderBy:'-rank' | filter: '!'+user.school">
+                    <td>{{$index + 1}}</td>
+                    <td>{{x.name}}</td>
+                    <td>{{x.rank}}</td>
+                </tr>
+            </table>
+        </div>
+        <script>
+            var app = angular.module('hep', [])
+            app.controller('hepCtrl', function($scope){
+            })
+        </script>
+    </body>
+</html>
