@@ -20,47 +20,44 @@
     <body>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 
-        <div ng-app="hep" ng-controller="hepCtrl" ng-init="judge=[
-        {name:'熊貓', school:'建中', hate:'', rank:3},
-        {name:'猩猩', school:'建中', hate:'', rank:2},
-        {name:'企鵝', school:'景美', hate:'', rank:1},
-        {name:'獅子', school:'', hate:'老虎', rank:4},
-        {name:'老虎', school:'',hate:'獅子', rank:5},
-        {name:'水瀨', school:'',hate:'', rank:6}];
-        ">
+        <div ng-app="hep" ng-controller="hepCtrl">
             <h1>比賽學校:</h1>
             <div ng-repeat="school in schools">
-                <input type="text" ng-model="school.name"></input>
+                <input type="text" ng-model="school.name1"></input>
+                v.s
+                <input type="text" ng-model="school.name2"></input>
+                <br>
+                <br>
             </div>
-            <button ng-click="add()">新增學校</button>
-            <br>
-            <br>
-            <h1>裁判人選:</h1>
-            <p ng-repeat="x in judge">裁判: <input type="text" ng-model="x.name"></input> 畢業於: <input type="text" ng-model="x.school"></input> 黑特裁判:<input type="text" ng-model="x.hate"></input></p>
-            <br>
-            <h1>裁判黑特排名:</h1>
-            <p ng-repeat="x in judge">裁判:{{ x.name }} 被{{user.school}}黑特的排名: <input type="number" ng-model="x.rank"></input></p>
+            <button ng-click="addSchool()">新增學校</button>
             <br>
             <br>
 
-            <h2>適合{{user.school}}的志願順序:</h2>
+            <h1>裁判資料:</h1>
+            <p ng-repeat="judge in judges">裁判{{$index+1}}: <input type="text" ng-model="judge.name"></input> 畢業於: <input type="text" ng-model="judge.school"></input> 黑特裁判:<input type="text" ng-model="judge.hate"></input></p>
+            <button ng-click="addJudge()">新增裁判</button>
+            <br>
+            <br>
 
-            <table>
-                <tr ng-repeat="x in judge | orderBy:'-rank' | filter: '!'+user.school">
-                    <td>{{$index + 1}}</td>
-                    <td>{{x.name}}</td>
-                    <td>黑特等級: {{x.rank}}</td>
-                </tr>
-            </table>
         </div>
         <script>
             var app = angular.module('hep', [])
             app.controller('hepCtrl', function($scope){
                 $scope.schools = [];
 
-                $scope.add = function () {
+                $scope.addSchool = function () {
                     $scope.schools.push({
-                        name: ""
+                        name1: "",
+                        name1: ""
+                    });
+                };
+
+                $scope.judges = [];
+                $scope.addJudge = function () {
+                    $scope.judges.push({
+                        name: "",
+                        school: "",
+                        hate: ""
                     });
                 };
             })
